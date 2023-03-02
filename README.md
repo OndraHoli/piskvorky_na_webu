@@ -1,2 +1,3 @@
 # piskvorky_na_webu
-piskvorky web game
+
+implementace hry piskvorky na webu - work in progress
