@@ -4,6 +4,7 @@
   font-family: Arial, Helvetica, sans-serif;
   width: 150px;
   height: 150px;
+  border: 2px solid;
   background-color: rgb(255, 255, 255);
 
   cursor: pointer;
@@ -12,15 +13,18 @@
 #herniPlan {
   display: grid;
   grid-template-columns: repeat(3, auto);
-  gap: 10px;
+
   width: 300px;
-  margin-top: 150px;
+  margin: auto;
 }
 
 body {
   background-color: black;
 }
 
+h1 {
+  color: white;
+}
 h2 {
   color: rgb(255, 255, 255);
   font-family: Arial, Helvetica, sans-serif;
@@ -37,7 +41,4 @@ h2 {
 
 #container {
   text-align: center;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
 }

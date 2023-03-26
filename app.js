@@ -1,9 +1,20 @@
-let bunky = document.querySelectorAll(".bunka");
+const bunky = document.querySelectorAll(".bunka");
 
-let restartBtn = document.querySelector("#restart");
-let vyherniText = document.querySelector("#vitezText");
+const restartBtn = document.querySelector("#restart");
+const vyherniText = document.querySelector("#vitezText");
 
-pole = ["", "", "", "", "", "", "", "", ""];
+const vyherniKombinace = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
+
+let pole = ["", "", "", "", "", "", "", "", ""];
 
 let naRade = "X";
 let playing = true;
@@ -19,20 +30,61 @@ function init() {
   });
 
   restartBtn.addEventListener("click", restart);
-  vyherniText.textContent = "---------------";
+  vyherniText.textContent = naRade;
 }
 
 function clicked() {
   console.log("kliknuto test");
-  indexBunky = this.getAttribute("index");
+  const indexBunky = this.getAttribute("index");
   console.log(indexBunky);
 
   if (pole[indexBunky] != "" || playing == false) {
-    pole[indexBunky] = naRade;
-    this.textContent = naRade;
+    return;
+  }
+
+  updateCell(this, indexBunky);
+  checkWinner();
+}
+function updateCell(bunka, indexBunky) {
+  pole[indexBunky] = naRade;
+  bunka.textContent = naRade;
+}
+
+function changePlayer() {
+  naRade = naRade == "X" ? "O" : "X";
+  vyherniText.textContent = naRade;
+}
+
+function checkWinner() {
+  let roundWon = false;
+  for (let i = 0; i < vyherniKombinace.length; i++) {
+    const condition = vyherniKombinace[i];
+    const cellA = vyherniKombinace[condition[0]];
+    const cellB = vyherniKombinace[condition[1]];
+    const cellC = vyherniKombinace[condition[2]];
+
+    if (cellA == "" || cellB == "" || cellC == "") {
+      continue;
+    }
+    if (cellA == cellB && cellB == cellC) {
+      roundWon = true;
+      break;
+    }
+  }
+  if (roundWon) {
+    vyherniText.textContent = "vyhrano";
+    playing = false;
+  } else if (!pole.includes("")) {
+    vyherniText.textContent = "remíza";
+  } else {
+    changePlayer();
   }
 }
 
-function checkWinner() {}
-
-function restart() {}
+function restart() {
+  naRade = "X";
+  pole = ["", "", "", "", "", "", "", "", ""];
+  vyherniText.textContent = "X";
+  bunky.forEach((bunka) => (bunka.textContent = ""));
+  playing = true;
+}
